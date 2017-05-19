@@ -1,3 +1,7 @@
+#####################################################################
+# Testing gitlab-runner locally: gitlab-runner exec shell <job>
+#####################################################################
+
 stages:
   - build
   - release
@@ -22,31 +26,31 @@ build:image:php5.6-apache:
     - docker tag $BUILD_IMAGE $LEGACY_IMAGE
     - docker push $LEGACY_IMAGE
 
-build:image:php5.6-apache-alpine:
-  stage: build
-  variables:
-    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php5.6-apache-alpine
-  only:
-    - master
-  tags:
-    - shell-executor
-    - docker
-  script:
-    - docker build --pull -t $BUILD_IMAGE php5.6-apache-alpine
-    - docker push $BUILD_IMAGE
-
-release:image:
-  stage: release
-  variables:
-    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php5.6-apache
-    RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
-  only: 
-    - master
-  tags:
-    - shell-executor
-    - docker
-  script:
-    - docker pull $BUILD_IMAGE
-    - docker tag $BUILD_IMAGE $RELEASE_IMAGE
-    - docker push $RELEASE_IMAGE
+#build:image:php5.6-apache-alpine:
+#  stage: build
+#  variables:
+#    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php5.6-apache-alpine
+#  only:
+#    - master
+#  tags:
+#    - shell-executor
+#    - docker
+#  script:
+#    - docker build --pull -t $BUILD_IMAGE php5.6-apache-alpine
+#    - docker push $BUILD_IMAGE
+#
+#release:image:
+#  stage: release
+#  variables:
+#    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php5.6-apache
+#    RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+#  only:
+#    - master
+#  tags:
+#    - shell-executor
+#    - docker
+#  script:
+#    - docker pull $BUILD_IMAGE
+#    - docker tag $BUILD_IMAGE $RELEASE_IMAGE
+#    - docker push $RELEASE_IMAGE
 
