@@ -10,10 +10,10 @@ before_script:
   - if test "x$(uname -s)" == "xDarwin"; then eval $(docker-machine env default); fi
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 
-build:image:php5.6-apache:
+build:image:php7.1:
   stage: build
   variables:
-    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php5.6-apache
+    BUILD_IMAGE: $CI_REGISTRY_IMAGE:php7.1
     LEGACY_IMAGE: $CI_REGISTRY_IMAGE:master
   only:
     - master
@@ -21,7 +21,7 @@ build:image:php5.6-apache:
     - shell-executor
     - docker
   script:
-    - docker build --pull -t $BUILD_IMAGE php5.6-apache
+    - docker build --pull -t $BUILD_IMAGE php7.1
     - docker push $BUILD_IMAGE
     - docker tag $BUILD_IMAGE $LEGACY_IMAGE
     - docker push $LEGACY_IMAGE
